@@ -1,0 +1,33 @@
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.LineUnavailableException;
+
+Clip backgroundMusic;
+
+void loadBackgroundMusic(String wavFilePath) {
+    try {
+        // Tạo một AudioInputStream từ tệp WAV
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(wavFilePath));
+
+        // Lấy một Clip
+        backgroundMusic = AudioSystem.getClip();
+
+        // Mở Clip và đặt nó bằng AudioInputStream
+        backgroundMusic.open(audioInputStream);
+
+        // Lặp vô hạn
+        backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+public void stopBackgroundMusic() {
+    if (backgroundMusic != null && backgroundMusic.isRunning()) {
+        backgroundMusic.stop();
+        backgroundMusic.close();
+    }
+}
+
